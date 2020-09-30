@@ -9,18 +9,26 @@ fun main(args: Array<String>) {
         return
     }
 
-//    val path = "/sdcard/honeywell/"
-//    val ret = exec(mutableListOf(adb_exe, "shell", "ls", "-l", path))
+//    val path = "/sdcard/"
+//    val ret = exec(mutableListOf(adbPath, "shell", "ls", "-l", path))
 //    println(ret)
 
-    val pcfile = "c:\\temp\\sysinfo.txt"
-    val success = getSysinfo(pcfile)
-    println("getSysinfo() returned $success")
-    val sysinfomap = sysinfoToMap(pcfile)
-    println("sysinfo map = $sysinfomap")
+//    val pcfile = "c:\\temp\\sysinfo.txt"
+//    var success = getSysinfo(pcfile)
+//    println("getSysinfo() returned $success")
+//    val sysinfomap = sysinfoToMap(pcfile)
+//    println("sysinfo map = $sysinfomap")
 
-    val properties = propertiesToMap()
-    println("properties map = $properties")
+//    val properties = propertiesToMap()
+//    println("properties map = $properties")
+
+    val path = downloadPlatformTools("c:/temp")
+    println("downloadPlatformTools returned $path")
+    if (path.isNotEmpty()) {
+        val zipfile = File(path)
+        val targetfolder = unzipPlatformTools(zipfile)
+        println("unzipPlatformTools returned $targetfolder")
+    }
 }
 
 /**
@@ -61,7 +69,7 @@ fun propertiesToMap(): Map<String, String> {
 
     val data = emptyMap<String, String>().toMutableMap()
 
-    val propString = exec(mutableListOf(adb_exe, "shell", "getprop"))
+    val propString = exec(mutableListOf(adbPath, "shell", "getprop"))
 
     propString.trim().lines().forEach {
         val parts = it.split("]: [")
