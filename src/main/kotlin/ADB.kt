@@ -53,3 +53,14 @@ fun checkADB(): Boolean {
     println("Warning: ADB response to validate: $ret")
     return true
 }
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Test functions
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+@Suppress("FunctionName")
+private fun main() {
+    val path = "/sdcard/"
+    val ret = exec(mutableListOf(adbPath, "shell", "ls", "-l", path))
+    println(ret)
+}

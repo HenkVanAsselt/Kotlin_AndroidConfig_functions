@@ -92,3 +92,18 @@ fun unzipPlatformTools(zipfile: File, foldername: String = "c:/temp"): String {
     zipfile.delete()        // @todo: Figure out why the file is NOT deleted here.
     return targetfolder.absolutePath
 }
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Test functions
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+@Suppress("FunctionName")
+private fun main() {
+    val path = downloadPlatformTools("c:/temp")
+    println("downloadPlatformTools returned $path")
+    if (path.isNotEmpty()) {
+        val zipfile = File(path)
+        val targetfolder = unzipPlatformTools(zipfile)
+        println("unzipPlatformTools returned $targetfolder")
+    }
+}
