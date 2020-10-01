@@ -37,18 +37,73 @@ fun push (pcfile: String, androidfile: String) : Boolean {
         "failed to copy" in ret -> return false
         "remote secure_mkdirs failed" in ret -> return false
         "Read-only file system" in ret -> return false
-        "@todo" in ret -> return false
         else -> println("NOTE to developer: this return text is not processed yet: $ret")
     }
     return false
 }
+
+/**
+ * Test if a given file path is a file on the connected Android device
+ * @param androidfile File to test on
+ * @return true if this is a file, false if not
+ */
+fun isFile(androidfile: String): Boolean {
+    val ret = exec(mutableListOf(adbPath, "shell", "ls", "-l", androidfile))
+//    println(ret)
+    /**
+     *  Sample output:
+     *  -rw-rw---- 1 root sdcard_rw 2666 2020-09-27 10:50 /sdcard/test1.txt
+     */
+
+    when {
+        androidfile in ret && ret[0] == '-' -> return true
+        "No such file or directory" in ret -> return false
+        androidfile !in ret -> return false
+        else -> println("NOTE to developer: this return text is not processed yet: $ret")
+    }
+    return false
+}
+
+/**
+ * Test if a given file path is a folder on the connected Android device
+ * @param androidfolder Possible folder name to test on
+ * @return true if this is a folder, false if not
+ */
+fun isFolder(androidfolder: String): Boolean {
+    val ret = exec(mutableListOf(adbPath, "shell", "ls", "-l", androidfolder))
+//    println(ret)
+    when {
+        "No such file or directory" in ret -> return false
+        androidfolder in ret && ret[0] == 'l' -> return true   // This is a link to another folder
+        // Example: lrw-r--r-- 1 root root 21 2009-01-01 01:00 /sdcard -> /storage/self/primary
+        ret.startsWith("total ") -> return true     // There are entries found in here, so it is a folder
+        else -> println("NOTE to developer: this return text is not processed yet: $ret")
+    }
+    return false
+}
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Test functions
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 private fun main() {
-    push("c:/temp/test.txt", "/sdcard/test1.txt")
-    val ret = exec(mutableListOf(adbPath, "shell", "ls", "-l", "/sdcard/"))
-    println(ret)
+
+//    push("c:/temp/test.txt", "/sdcard/test1.txt")
+//    val ret = exec(mutableListOf(adbPath, "shell", "ls", "-l", "/sdcard/"))
+//    println(ret)
+
+//    var ret = isFile("/sdcard/test1.txt")
+//    println("isFile returned $ret")
+//    ret = isFile("/sdcard/test2.txt")
+//    println("isFile returned $ret")
+//    ret = isFile("/sdcard/")
+//    println("isFile returned $ret")
+
+    var ret = isFolder("/sdcard/")
+    println("isFolder returned $ret")
+    ret = isFolder("/sdcard")
+    println("isFolder returned $ret")
+    ret = isFolder("/sdcard/test1.txt")
+    println("isFolder returned $ret")
 }

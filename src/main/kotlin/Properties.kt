@@ -1,5 +1,5 @@
 /**
- * Read the device properties, and return a map of these properties
+ * Read the device properties
  * @return: map of the properties
  */
 fun propertiesToMap(): Map<String, String> {
