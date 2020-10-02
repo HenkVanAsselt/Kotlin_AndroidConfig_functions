@@ -82,12 +82,83 @@ fun isFolder(androidfolder: String): Boolean {
     return false
 }
 
+/**
+ * Make a directory/folder on the connected Android device
+ * @param androidfolder The full path of the directory to create
+ * @return true on success, false on failure
+ */
+fun mkdir(androidfolder: String): Boolean {
+    val ret = exec(mutableListOf(adbPath, "shell", "mkdir", androidfolder))
+    println(ret)
+    when {
+        ret == "" -> return true      // All is ok
+        "File exists" in ret -> return false
+        else -> println("NOTE to developer: this return text is not processed yet: $ret")
+    }
+    return false
+}
+
+/**
+ * Delete a file or folder on the connected Android device
+ * @param androidfolder The full path of the directory to remove
+ * @return true on success, false on failure*
+ */
+fun rmdir(androidfolder: String): Boolean{
+    val ret = exec(mutableListOf(adbPath, "shell", "rm", "-r", androidfolder))
+    println(ret)
+    when {
+        ret == "" -> return true      // All is ok
+        "No such file or directory" in ret -> return false
+        else -> println("NOTE to developer: this return text is not processed yet: $ret")
+    }
+    return false
+
+}
+
+/**
+ * Delete a file or folder on the connected Android device
+ * @param androidfile The full path of the file to remove
+ * @return true on success, false on failure*
+ */
+fun rm(androidfile: String): Boolean{
+    val ret = exec(mutableListOf(adbPath, "shell", "rm", androidfile))
+    println(ret)
+    when {
+        ret == "" -> return true      // All is ok
+        else -> println("NOTE to developer: this return text is not processed yet: $ret")
+    }
+    return false
+
+
+}
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Test functions
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 private fun main() {
+
+    if (!checkADB()) {
+        println("Error: Cannot continue due to error in ADB")
+        return
+    }
+
+    val foldername = "/sdcard/testdir"
+    var ret = rmdir(foldername)
+    println("rmdir($foldername) returned $ret")
+    ret = mkdir(foldername)
+    println("mkdir($foldername) returned $ret")
+
+    var dirs = exec(mutableListOf(adbPath, "shell", "ls", "-l", "/sdcard/"))
+    println(dirs)
+
+    ret = rmdir(foldername)
+    println("rmdir($foldername) returned $ret")
+    dirs = exec(mutableListOf(adbPath, "shell", "ls", "-l", "/sdcard/"))
+    println(dirs)
+
+//    ret = rmdir(foldername)
+//    println("rmdir($foldername) returned $ret")
 
 //    push("c:/temp/test.txt", "/sdcard/test1.txt")
 //    val ret = exec(mutableListOf(adbPath, "shell", "ls", "-l", "/sdcard/"))
@@ -100,10 +171,10 @@ private fun main() {
 //    ret = isFile("/sdcard/")
 //    println("isFile returned $ret")
 
-    var ret = isFolder("/sdcard/")
-    println("isFolder returned $ret")
-    ret = isFolder("/sdcard")
-    println("isFolder returned $ret")
-    ret = isFolder("/sdcard/test1.txt")
-    println("isFolder returned $ret")
+//    var ret = isFolder("/sdcard/")
+//    println("isFolder returned $ret")
+//    ret = isFolder("/sdcard")
+//    println("isFolder returned $ret")
+//    ret = isFolder("/sdcard/test1.txt")
+//    println("isFolder returned $ret")
 }
