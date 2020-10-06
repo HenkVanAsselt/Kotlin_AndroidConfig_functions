@@ -17,6 +17,18 @@ fun main(args: Array<String>) {
         return
     }
 
+    var otherArgs = arrayOf("")
+
+    if (argCount > 1){
+        otherArgs = args.sliceArray(1..argCount-1)
+        println("Remaining arguments:")
+        for (s in otherArgs) {
+            println(s)
+        }
+        println("===")
+    }
+
+
     // Check if ADB.exe can be found and started
     if (!checkADB()) {
         println("Error: Cannot continue due to error in ADB")
@@ -26,7 +38,7 @@ fun main(args: Array<String>) {
     when {
         args[0] == "ls" || args[0] == "dir" -> {
 //            val ret = exec(mutableListOf(adbPath, "shell", "ls", "-l", "/sdcard/"))
-            val ret = exec(mutableListOf(adbPath, "shell", *args))
+            val ret = exec(mutableListOf(adbPath, "shell", "ls", *otherArgs))
             println(ret)
         }
         else -> {
@@ -34,7 +46,6 @@ fun main(args: Array<String>) {
             return
         }
     }
-
 
 //    // test ls. @todo Remove this test from here
 //    val ret = exec(mutableListOf(adbPath, "shell", "ls", "-l", "/sdcard/"))
