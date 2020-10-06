@@ -1,0 +1,1 @@
+set | grep -i java
