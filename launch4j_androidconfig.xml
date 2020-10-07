@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>console</headerType>
+  <jar>D:\hva\projects\Kotlin_AndroidConfig_functions\build\libs\Kotlin_AndroidConfig_functions-1.0-SNAPSHOT.jar</jar>
+  <outfile>c:\temp\kotlin_androidconfig.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>true</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon></icon>
+  <jre>
+    <path>C:\Program Files\Java\jre1.8.0_261</path>
+    <bundledJre64Bit>true</bundledJre64Bit>
+    <bundledJreAsFallback>true</bundledJreAsFallback>
+    <minVersion>1.4.0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <runtimeBits>64/32</runtimeBits>
+  </jre>
+  <versionInfo>
+    <fileVersion>1.0.0.0</fileVersion>
+    <txtFileVersion>version 1.0.0.0</txtFileVersion>
+    <fileDescription>Test</fileDescription>
+    <copyright>HenkA</copyright>
+    <productVersion>1.0.0.0</productVersion>
+    <txtProductVersion>version 1.0.0.0</txtProductVersion>
+    <productName>test androidconfig</productName>
+    <companyName></companyName>
+    <internalName>testandroidconfig</internalName>
+    <originalFilename>testandroidconfig.exe</originalFilename>
+    <trademarks></trademarks>
+    <language>ENGLISH_US</language>
+  </versionInfo>
+</launch4jConfig>
