@@ -6,6 +6,6 @@ This project is written in Kotlin and is a **wrapper around ADB.exe** to communi
 
 A similar tool was written in Python, and with this project I am trying to master Kotlin.
 
-For now, it will only offer a commandline interface. A GUI will be implemeted later.
+For now, it will only offer a commandline interface. A GUI will be implemented later.
 
 This project is inspired by https://github.com/Szaki/XiaomiADBFastbootTools

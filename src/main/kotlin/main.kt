@@ -1,5 +1,8 @@
 @file:Suppress("UNUSED_PARAMETER", "SpellCheckingInspection")
 
+import java.util.*
+
+
 fun main(args: Array<String>) {
 
     // Determine the number of commandline arguments. Used for slicing later.
@@ -20,7 +23,7 @@ fun main(args: Array<String>) {
     // So "dir -l /sdcard/" will be processed as "ls -l /sdcard"
     var otherArgs = arrayOf("")
     if (argCount > 1){
-        otherArgs = args.sliceArray(1 until argCount-1)
+        otherArgs = args.sliceArray(1 until argCount - 1)
     }
 
     // Check if ADB.exe can be found and started
@@ -31,14 +34,26 @@ fun main(args: Array<String>) {
 
     // Process the commandline arguments
     when {
+        args[0] == "shell" -> {
+            val commands: MutableList<String> = ArrayList()
+            commands.add("cmd.exe")
+            commands.add("/C")
+            commands.add("start")
+            commands.add(adbPath)
+            commands.add("shell")
+            val pb = ProcessBuilder(commands)
+            pb.start()
+        }
         args[0] == "ls" || args[0] == "dir" -> {
             val ret = exec(mutableListOf(adbPath, "shell", "ls", *otherArgs))
             println(ret)
+            return
         }
         args[0] == "reboot" -> {
             // Arguments could be:  reboot, reboot bootloader, reboot recovery
             val ret = exec(mutableListOf(adbPath, *args))
             println(ret)
+            return
         }
         args[0] == "restart" -> {
             println("Step 1: killing adb service")
@@ -61,5 +76,5 @@ fun main(args: Array<String>) {
             return // 0x00000000  // ERROR_SUCCESS
         }
     }
-    return // 0x00000001   // ERROR_INVALID_FUNCTION
+    // return // 0x00000001   // ERROR_INVALID_FUNCTION
 }
