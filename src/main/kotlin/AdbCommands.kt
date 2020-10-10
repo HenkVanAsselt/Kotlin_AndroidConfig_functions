@@ -69,7 +69,7 @@ fun isFile(androidfile: String): Boolean {
  * @param androidfolder Possible folder name to test on
  * @return true if this is a folder, false if not
  */
-fun isFolder(androidfolder: String): Boolean {
+fun isDir(androidfolder: String): Boolean {
     val ret = exec(mutableListOf(adbPath, "shell", "ls", "-l", androidfolder))
 //    println(ret)
     when {
@@ -171,10 +171,10 @@ private fun main() {
 //    ret = isFile("/sdcard/")
 //    println("isFile returned $ret")
 
-//    var ret = isFolder("/sdcard/")
-//    println("isFolder returned $ret")
-//    ret = isFolder("/sdcard")
-//    println("isFolder returned $ret")
-//    ret = isFolder("/sdcard/test1.txt")
-//    println("isFolder returned $ret")
+//    var ret = isFile("/sdcard/")
+//    println("isFile returned $ret")
+//    ret = isFile("/sdcard")
+//    println("isFile returned $ret")
+//    ret = isFile("/sdcard/test1.txt")
+//    println("isFile returned $ret")
 }
